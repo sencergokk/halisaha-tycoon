@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halı Saha Tycoon</title>
+<meta name="description" content="Kendi halı sahanı kur, işlet, büyüt. Halı Saha Tycoon iPhone için ücretsiz halı saha işletme oyunu. Reklam yok, internet gerekmez.">
+<meta name="theme-color" content="#06100C">
+<meta property="og:title" content="Halı Saha Tycoon">
+<meta property="og:description" content="Halı sahan olsa ne kadar kazanırdın? Kendi sahanı kur, kendin gör.">
+<meta property="og:image" content="img/01_pitch_tr.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/icon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root {
+    --bg: #06100C;
+    --bg-2: #0D2318;
+    --card: #12251B;
+    --line: rgba(241,245,241,.10);
+    --text: #F1F5F1;
+    --dim: #9BB0A2;
+    --accent: #FFC24B;
+    --accent-deep: #F59E0B;
+    --money: #4ADE80;
+    --ink-on-accent: #1A1406;
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    background-image: radial-gradient(120% 60% at 50% 0%, #163A28 0%, var(--bg-2) 40%, var(--bg) 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+  header.top { display: flex; align-items: center; gap: 12px; padding: 18px 0; }
+  header.top img { width: 44px; height: 44px; border-radius: 11px; box-shadow: 0 2px 10px rgba(0,0,0,.4); }
+  header.top b { font-size: 17px; letter-spacing: -.01em; }
+  header.top span { display: block; color: var(--dim); font-size: 13px; }
+
+  .hero { display: grid; gap: 32px; align-items: center; padding: 20px 0 40px; }
+  .eyebrow { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  h1 { font-size: clamp(32px, 8.4vw, 56px); line-height: 1.06; letter-spacing: -.025em; margin: 0 0 16px; text-wrap: balance; font-weight: 800; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: clamp(17px, 4.4vw, 19px); color: var(--dim); margin: 0 0 26px; max-width: 34em; }
+  .lead strong { color: var(--text); font-weight: 600; }
+
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 56px; padding: 0 28px; border-radius: 16px;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: var(--ink-on-accent); font-weight: 800; font-size: 18px; text-decoration: none;
+    box-shadow: 0 8px 24px rgba(245,158,11,.28), inset 0 -2px 0 rgba(0,0,0,.12);
+    transition: transform .15s ease, box-shadow .15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cta:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(245,158,11,.36), inset 0 -2px 0 rgba(0,0,0,.12); }
+  .cta:active { transform: translateY(1px); }
+  .cta:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .cta svg { width: 22px; height: 22px; flex: none; }
+  .fine { font-size: 13px; color: var(--dim); margin: 12px 0 0; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; list-style: none; }
+  .chips li { font-size: 14px; padding: 7px 12px; border-radius: 999px; background: rgba(74,222,128,.08); border: 1px solid rgba(74,222,128,.22); color: #CFEFD9; }
+
+  .phone { display: none; justify-self: center; width: min(78vw, 330px); border-radius: 28px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.55), 0 0 0 1px var(--line); }
+
+  section.shots { padding: 8px 0 44px; }
+  h2 { font-size: clamp(24px, 6vw, 32px); letter-spacing: -.02em; margin: 0 0 18px; text-wrap: balance; }
+  .rail {
+    display: grid; grid-auto-flow: column; grid-auto-columns: min(62vw, 250px); gap: 14px;
+    overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 20px 16px; margin: 0 -20px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail img { width: 100%; aspect-ratio: 1290 / 2796; object-fit: cover; border-radius: 18px; scroll-snap-align: center; box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 0 1px var(--line); }
+
+  section.feats { padding: 0 0 48px; }
+  .grid { display: grid; gap: 12px; }
+  .feat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  .feat b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .feat p { margin: 0; color: var(--dim); font-size: 15px; }
+
+  section.final { text-align: center; padding: 8px 0 56px; }
+  section.final p { color: var(--dim); margin: 0 0 22px; }
+
+  footer { border-top: 1px solid var(--line); padding: 22px 0 30px; color: var(--dim); font-size: 13px; }
+  footer .wrap { display: grid; gap: 6px; }
+
+  .sticky {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: rgba(6,16,12,.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sticky img { width: 44px; height: 44px; border-radius: 10px; flex: none; }
+  .sticky .t { flex: 1; min-width: 0; line-height: 1.25; }
+  .sticky .t b { display: block; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sticky .t span { font-size: 12px; color: var(--dim); }
+  .sticky .cta { min-height: 46px; padding: 0 20px; font-size: 16px; border-radius: 13px; }
+
+  @media (min-width: 820px) {
+    body { padding-bottom: 0; }
+    .hero { grid-template-columns: 1.15fr .85fr; padding: 40px 0 64px; gap: 48px; }
+    .phone { display: block; width: 340px; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .rail { grid-auto-columns: 240px; margin: 0; padding: 4px 0 16px; }
+    .sticky { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cta { transition: none; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <img src="img/icon.png" alt="Halı Saha Tycoon simgesi" width="44" height="44">
+      <div><b>Halı Saha Tycoon</b><span>Halı saha işletme oyunu</span></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <span class="eyebrow">iPhone için ücretsiz</span>
+          <h1>Halı sahan olsa <em>ne kadar kazanırdın?</em></h1>
+          <p class="lead">Amcandan sana harap bir halı saha kaldı. <strong>Çimi yenile, projektörleri yak, fiyatı sen koy</strong> ve mahalleden stadyumun yanına kadar büyü. Hayal etmene gerek yok, kendin gör.</p>
+          <a class="cta" href="https://apps.apple.com/tr/app/id6801822720" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v9.59l3.3-3.3a1 1 0 1 1 1.4 1.42l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.42l3.3 3.3V4a1 1 0 0 1 1-1ZM5 19a1 1 0 0 1 1-1h12a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"/></svg>
+            App Store'dan İndir
+          </a>
+          <p class="fine">Ücretsiz · Uygulama içi satın alımlar içerir · iPhone, iOS 17 ve üstü</p>
+          <ul class="chips">
+            <li>Reklam yok</li>
+            <li>İnternet gerekmez</li>
+            <li>Hesap açmak gerekmez</li>
+          </ul>
+        </div>
+        <img class="phone" src="img/01_pitch_tr.jpg" alt="Oyunda saha ekranı: saat ücreti, doluluk ve fiyat politikası" width="507" height="1100">
+      </section>
+
+      <section class="shots" aria-labelledby="shots-h">
+        <h2 id="shots-h">Oyundan görüntüler</h2>
+        <div class="rail">
+          <img src="img/01_pitch_tr.jpg" alt="Sahanı saatlik kirala" loading="lazy" width="507" height="1100">
+          <img src="img/03_upgrades_tr.jpg" alt="Suni çim, projektör ve ses sistemi yükseltmeleri" loading="lazy" width="507" height="1100">
+          <img src="img/06_branches_tr.jpg" alt="Mahalleden yeni semtlere şube aç" loading="lazy" width="507" height="1100">
+          <img src="img/08_league_tr.jpg" alt="16 sahalı haftalık lig tablosu" loading="lazy" width="507" height="1100">
+        </div>
+      </section>
+
+      <section class="feats" aria-labelledby="feats-h">
+        <h2 id="feats-h">Patron artık sensin</h2>
+        <div class="grid">
+          <div class="feat"><b>Fiyatı sen koy</b><p>Ucuz tutarsan saha dolar, tuzlu yaparsan takımlar küser. Dengeyi sen kur.</p></div>
+          <div class="feat"><b>Sahanı yenile</b><p>Suni çim, projektör, çevre filesi, kantin, tribün. Her yükseltme kirayı ya da doluluğu artırır.</p></div>
+          <div class="feat"><b>Şube aç, büyü</b><p>Mahalle arasından Sanayi Sitesi'ne, Sahil Yolu'ndan Stadyum Yanı'na kadar yeni sahalar aç.</p></div>
+          <div class="feat"><b>Penaltı düellosu ve haftalık lig</b><p>Rakip tesislere meydan oku, haftalık ciroyla ligde yüksel.</p></div>
+        </div>
+      </section>
+
+      <section class="final">
+        <h2>Kendi halı sahanı kur</h2>
+        <p>Ücretsiz indir, kendin gör.</p>
+        <a class="cta" href="https://apps.apple.com/tr/app/id6801822720" rel="noopener">App Store'dan İndir</a>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Skycer App Studio · Halı Saha Tycoon</span>
+      <span>İletişim: <a href="mailto:sencergok@outlook.com">sencergok@outlook.com</a></span>
+      <span>Bu sayfa çerez ya da takip kodu kullanmaz.</span>
+    </div>
+  </footer>
+
+  <div class="sticky" role="complementary" aria-label="İndirme">
+    <img src="img/icon.png" alt="" width="44" height="44">
+    <div class="t"><b>Halı Saha Tycoon</b><span>Ücretsiz · Reklam yok</span></div>
+    <a class="cta" href="https://apps.apple.com/tr/app/id6801822720" rel="noopener">İndir</a>
+  </div>
+</body>
+</html>
